@@ -1,0 +1,21 @@
+name: Create a Release
+on:
+  push:
+    branches: [main]
+jobs:
+  release:
+    name: Run Semantic Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@master
+      - name: Setup Node.js environment
+        uses: actions/setup-node@master
+        with:
+          node_version: '12.x'
+      - name: Install the Semantic Release Dependencies
+        run: npm install -D semantic-release @semantic-release/git @semantic-release/npm last-release-git
+      - name: Create the Release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
