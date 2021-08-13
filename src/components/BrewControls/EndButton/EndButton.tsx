@@ -1,4 +1,4 @@
-import IconButton from "src/components/common/IconButton/IconButton";
+import IconButton from "../../common/IconButton/IconButton";
 
 interface EndButtonProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
