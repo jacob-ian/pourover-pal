@@ -9,8 +9,12 @@ import Header from "./components/Header/Header";
 import ResetButton from "./components/BrewControls/ResetButton/ResetButton";
 import BrewTimer from "./components/BrewControls/BrewTimer/BrewTimer";
 import VolumeInput from "./components/BrewForm/VolumeInput";
+import BloomDuration from "./components/BrewForm/Bloom/BloomDuration";
+import Bloom from "./components/BrewForm/Bloom/Bloom";
+import BloomRatio from "./components/BrewForm/Bloom/BloomRatio";
 
 type InputEvent = React.FormEvent<HTMLInputElement>;
+type SelectEvent = React.FormEvent<HTMLSelectElement>;
 
 export interface BrewDetails {
   waterVolume: number | undefined;
@@ -32,10 +36,24 @@ export default function App() {
   function handleNumberInput(brewDetail: string, event: InputEvent): void {
     const value = event.currentTarget.valueAsNumber;
     if (value) {
-      return setBrewDetails({ ...brewDetails, [brewDetail]: value });
+      return updateBrewDetail(brewDetail, value);
     }
 
-    return setBrewDetails({ ...brewDetails, [brewDetail]: undefined });
+    return updateBrewDetail(brewDetail, undefined);
+  }
+
+  function updateBrewDetail(detail: string, value: number | undefined): void {
+    return setBrewDetails({ ...brewDetails, [detail]: value });
+  }
+
+  function handleSelectInput(brewDetail: string, event: SelectEvent): void {
+    const inputValue = event.currentTarget.value;
+
+    if (inputValue) {
+      return updateBrewDetail(brewDetail, parseInt(inputValue));
+    }
+
+    return updateBrewDetail(brewDetail, undefined);
   }
 
   function handleBrewTimerClick(): void {
@@ -80,6 +98,16 @@ export default function App() {
               value={brewDetails.waterVolume}
               onInput={(event) => handleNumberInput("waterVolume", event)}
             />
+            <Bloom>
+              <BloomRatio
+                value={brewDetails.bloomRatio}
+                onChange={(event) => handleSelectInput("bloomRatio", event)}
+              />
+              <BloomDuration
+                value={brewDetails.bloomDuration}
+                onInput={(event) => handleNumberInput("bloomDuration", event)}
+              />
+            </Bloom>
           </BrewForm>
         )}
         <BrewControls>

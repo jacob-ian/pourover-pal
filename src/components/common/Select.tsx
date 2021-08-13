@@ -12,6 +12,7 @@ export default function Select(props: SelectProps): JSX.Element {
   return (
     <InputLabel label={props.label}>
       <select className="select" onChange={props.onChange} value={props.value}>
+        <option value="">Select...</option>
         {props.children};
       </select>
     </InputLabel>
