@@ -13,12 +13,17 @@ import BloomDuration from "./components/BrewForm/Bloom/BloomDuration";
 import Bloom from "./components/BrewForm/Bloom/Bloom";
 import BloomRatio from "./components/BrewForm/Bloom/BloomRatio";
 import CoffeeGrinds from "./components/BrewForm/CoffeeGrinds/CoffeeGrinds";
+import CoffeeStrength from "./components/BrewForm/CoffeeStrength/CoffeeStrength";
+import CoffeeStrengthAbsolute from "./components/BrewForm/CoffeeStrength/CoffeeStrengthAbsolute";
+import CoffeeStrengthRatios from "./components/BrewForm/CoffeeStrength/CoffeeStrengthRatios";
 
 type InputEvent = React.FormEvent<HTMLInputElement>;
 type SelectEvent = React.FormEvent<HTMLSelectElement>;
 
 export interface BrewDetails {
   waterVolume: number | undefined;
+  coffeeStrengthRatio: number | undefined;
+  coffeeStrengthAbsolute: number | undefined;
   coffeeGrinds: number | undefined;
   bloomDuration: number | undefined;
   bloomRatio: number | undefined;
@@ -27,12 +32,48 @@ export interface BrewDetails {
 export default function App() {
   const [brewDetails, setBrewDetails] = useState<BrewDetails>({
     waterVolume: undefined,
+    coffeeStrengthAbsolute: 60,
+    coffeeStrengthRatio: calculateRatioStrength(60),
     coffeeGrinds: undefined,
     bloomDuration: undefined,
     bloomRatio: undefined,
   });
   const [brewStarted, setBrewStarted] = useState(false);
   const [brewPaused, setBrewPaused] = useState(false);
+
+  function calculateRatioStrength(absolute: number): number {
+    const waterToCoffee = 1 / (absolute / 1000);
+    return toTwoDecimalPlaces(waterToCoffee);
+  }
+
+  function toTwoDecimalPlaces(number: number): number {
+    return Math.round((number + Number.EPSILON) * 100) / 100;
+  }
+
+  function calculateAbsoluteStrength(ratio: number): number {
+    const coffeeGrams = (1 / ratio) * 1000;
+    return toTwoDecimalPlaces(coffeeGrams);
+  }
+
+  function handleAbsoluteStrength(event: InputEvent): void {
+    const absolute = event.currentTarget.valueAsNumber;
+    const ratio = calculateRatioStrength(absolute);
+    return setBrewDetails({
+      ...brewDetails,
+      coffeeStrengthAbsolute: absolute,
+      coffeeStrengthRatio: ratio,
+    });
+  }
+
+  function handleRatioStrength(event: InputEvent): void {
+    const ratio = event.currentTarget.valueAsNumber;
+    const absolute = calculateAbsoluteStrength(ratio);
+    return setBrewDetails({
+      ...brewDetails,
+      coffeeStrengthAbsolute: absolute,
+      coffeeStrengthRatio: ratio,
+    });
+  }
 
   function handleNumberInput(
     brewDetail: string,
@@ -46,7 +87,10 @@ export default function App() {
     return updateBrewDetail(brewDetail, undefined);
   }
 
-  function updateBrewDetail(detail: string, value: number | undefined): void {
+  function updateBrewDetail(
+    detail: string,
+    value: number | string | undefined
+  ): void {
     return setBrewDetails({ ...brewDetails, [detail]: value });
   }
 
@@ -74,6 +118,8 @@ export default function App() {
   function handleResetButton(): void {
     setBrewDetails({
       waterVolume: undefined,
+      coffeeStrengthAbsolute: 60,
+      coffeeStrengthRatio: calculateRatioStrength(60),
       coffeeGrinds: undefined,
       bloomDuration: undefined,
       bloomRatio: undefined,
@@ -92,6 +138,16 @@ export default function App() {
               value={brewDetails.waterVolume}
               onInput={(event) => handleNumberInput("waterVolume", event)}
             />
+            <CoffeeStrength>
+              <CoffeeStrengthAbsolute
+                value={brewDetails.coffeeStrengthAbsolute}
+                onInput={handleAbsoluteStrength}
+              />
+              <CoffeeStrengthRatios
+                value={brewDetails.coffeeStrengthRatio}
+                onInput={handleRatioStrength}
+              />
+            </CoffeeStrength>
             <Bloom>
               <BloomRatio
                 value={brewDetails.bloomRatio}
