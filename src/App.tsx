@@ -80,11 +80,7 @@ export default function App() {
     event: InputEvent | SelectEvent
   ): void {
     const value = event.currentTarget.value;
-    if (value) {
-      return updateBrewDetail(brewDetail, parseInt(value));
-    }
-
-    return updateBrewDetail(brewDetail, undefined);
+    return updateBrewDetail(brewDetail, value ? parseInt(value) : undefined);
   }
 
   function updateBrewDetail(
