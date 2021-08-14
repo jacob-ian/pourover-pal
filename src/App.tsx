@@ -51,8 +51,8 @@ export default function App() {
   }
 
   function calculateAbsoluteStrength(ratio: number): number {
-    const coffeeGrams = (1 / ratio) * 1000;
-    return toTwoDecimalPlaces(coffeeGrams);
+    const coffeeGramsPerLitre = (1 / ratio) * 1000;
+    return toTwoDecimalPlaces(coffeeGramsPerLitre);
   }
 
   function handleAbsoluteStrength(event: InputEvent): void {
