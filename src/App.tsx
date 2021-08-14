@@ -12,6 +12,7 @@ import VolumeInput from "./components/BrewForm/VolumeInput";
 import BloomDuration from "./components/BrewForm/Bloom/BloomDuration";
 import Bloom from "./components/BrewForm/Bloom/Bloom";
 import BloomRatio from "./components/BrewForm/Bloom/BloomRatio";
+import CoffeeGrinds from "./components/BrewForm/CoffeeGrinds/CoffeeGrinds";
 
 type InputEvent = React.FormEvent<HTMLInputElement>;
 type SelectEvent = React.FormEvent<HTMLSelectElement>;
@@ -33,10 +34,13 @@ export default function App() {
   const [brewStarted, setBrewStarted] = useState(false);
   const [brewPaused, setBrewPaused] = useState(false);
 
-  function handleNumberInput(brewDetail: string, event: InputEvent): void {
-    const value = event.currentTarget.valueAsNumber;
+  function handleNumberInput(
+    brewDetail: string,
+    event: InputEvent | SelectEvent
+  ): void {
+    const value = event.currentTarget.value;
     if (value) {
-      return updateBrewDetail(brewDetail, value);
+      return updateBrewDetail(brewDetail, parseInt(value));
     }
 
     return updateBrewDetail(brewDetail, undefined);
@@ -44,16 +48,6 @@ export default function App() {
 
   function updateBrewDetail(detail: string, value: number | undefined): void {
     return setBrewDetails({ ...brewDetails, [detail]: value });
-  }
-
-  function handleSelectInput(brewDetail: string, event: SelectEvent): void {
-    const inputValue = event.currentTarget.value;
-
-    if (inputValue) {
-      return updateBrewDetail(brewDetail, parseInt(inputValue));
-    }
-
-    return updateBrewDetail(brewDetail, undefined);
   }
 
   function handleBrewTimerClick(): void {
@@ -101,13 +95,14 @@ export default function App() {
             <Bloom>
               <BloomRatio
                 value={brewDetails.bloomRatio}
-                onChange={(event) => handleSelectInput("bloomRatio", event)}
+                onChange={(event) => handleNumberInput("bloomRatio", event)}
               />
               <BloomDuration
                 value={brewDetails.bloomDuration}
                 onInput={(event) => handleNumberInput("bloomDuration", event)}
               />
             </Bloom>
+            <CoffeeGrinds value={brewDetails.coffeeGrinds} />
           </BrewForm>
         )}
         <BrewControls>
