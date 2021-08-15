@@ -1,3 +1,5 @@
+import "./BrewTimer.sass";
+
 interface BrewTimerProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   ready: boolean;

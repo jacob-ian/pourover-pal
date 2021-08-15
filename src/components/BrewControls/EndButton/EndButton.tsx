@@ -2,6 +2,7 @@ import IconButton from "../../common/IconButton/IconButton";
 
 interface EndButtonProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
+  disabled: boolean;
 }
 
 export default function EndButton(props: EndButtonProps): JSX.Element {
@@ -9,8 +10,7 @@ export default function EndButton(props: EndButtonProps): JSX.Element {
     <IconButton
       onClick={props.onClick}
       iconName="close"
-      iconColor="white"
-      backgroundColor="#FF5050"
+      disabled={props.disabled}
     />
   );
 }

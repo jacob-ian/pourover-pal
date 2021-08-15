@@ -202,17 +202,14 @@ export default function App() {
           </BrewForm>
         )}
         <BrewControls>
+          <ResetButton onClick={handleResetButton} disabled={brewStarted} />
           <BrewTimer
             onClick={handleBrewTimerClick}
             ready={canStartBrew()}
             started={brewStarted}
             paused={brewPaused}
           />
-          {brewStarted ? (
-            <EndButton onClick={handleEndButton} />
-          ) : (
-            <ResetButton onClick={handleResetButton} />
-          )}
+          <EndButton onClick={handleEndButton} disabled={!brewStarted} />
         </BrewControls>
       </Card>
     </div>

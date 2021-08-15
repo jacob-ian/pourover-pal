@@ -8,32 +8,29 @@ afterEach(() => {
 describe("IconButton", () => {
   const onClick = () => {};
 
-  describe("Test without color or background color", () => {
+  describe("Test without className", () => {
     it("Should render component with close text in span", () => {
       const { getByText } = render(
-        <IconButton onClick={onClick} iconName="close" />
+        <IconButton onClick={onClick} iconName="close" disabled={false} />
       );
       const span = getByText("close");
       expect(span).toBeInTheDocument();
     });
   });
 
-  describe("Test with color and background color", () => {
-    it("Should have the color style", () => {
+  describe("Test with className", () => {
+    it("Should have the class in classList", () => {
       const { getByRole } = render(
-        <IconButton iconName="close" onClick={onClick} iconColor="#fff" />
+        <IconButton
+          iconName="close"
+          onClick={onClick}
+          className="test"
+          disabled={false}
+        />
       );
       const button = getByRole("button");
-      const color = button?.style.color;
-      expect(color).toBe("rgb(255, 255, 255)");
-    });
-    it("Should have the background color style", () => {
-      const { getByRole } = render(
-        <IconButton iconName="close" onClick={onClick} backgroundColor="#000" />
-      );
-      const button = getByRole("button");
-      const backgroundColor = button?.style.backgroundColor;
-      expect(backgroundColor).toBe("rgb(0, 0, 0)");
+      const classList = button.classList;
+      expect(classList.contains("test")).toBeTruthy();
     });
   });
 });
