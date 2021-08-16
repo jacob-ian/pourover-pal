@@ -1,4 +1,3 @@
-import InputLabel from "../../common/InputLabel";
 import { ReactNode } from "react";
 import "./CoffeeStrength.sass";
 
@@ -9,5 +8,10 @@ interface CoffeeStrengthProps {
 export default function CoffeeStrength(
   props: CoffeeStrengthProps
 ): JSX.Element {
-  return <InputLabel label="Coffee strength:">{props.children}</InputLabel>;
+  return (
+    <div className="coffee-strength">
+      <h3>Coffee strength:</h3>
+      <div className="coffee-strength-container">{props.children}</div>
+    </div>
+  );
 }

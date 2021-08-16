@@ -8,5 +8,12 @@ interface CoffeeStrengthRatiosProps {
 export default function CoffeeStrengthRatios(
   props: CoffeeStrengthRatiosProps
 ): JSX.Element {
-  return <NumberInput label="" value={props.value} onInput={props.onInput} />;
+  return (
+    <NumberInput
+      label=""
+      value={props.value}
+      onInput={props.onInput}
+      left="1 : "
+    />
+  );
 }

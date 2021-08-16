@@ -1,17 +1,12 @@
-import Select from "../../common/Select";
+import NumberInput from "../../common/NumberInput";
 
 interface BloomRatioProps {
+  onInput: React.FormEventHandler<HTMLInputElement>;
   value: number | undefined;
-  onChange: React.FormEventHandler<HTMLSelectElement>;
 }
 
 export default function BloomRatio(props: BloomRatioProps): JSX.Element {
-  const value = props.value ? `${props.value}` : "";
-
   return (
-    <Select value={value} onChange={props.onChange} label="Water : Coffee">
-      <option value="2">2:1</option>
-      <option value="3">3:1</option>
-    </Select>
+    <NumberInput right=" : 1" value={props.value} onInput={props.onInput} />
   );
 }

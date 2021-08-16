@@ -9,7 +9,7 @@ export default function VolumeInput(props: VolumeInputProps): JSX.Element {
   return (
     <NumberInput
       label="Brew volume:"
-      units="mL"
+      right="mL"
       value={props.value}
       onInput={props.onInput}
     />

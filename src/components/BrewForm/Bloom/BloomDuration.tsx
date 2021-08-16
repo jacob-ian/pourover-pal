@@ -7,6 +7,6 @@ interface BloomDurationProps {
 
 export default function BloomDuration(props: BloomDurationProps): JSX.Element {
   return (
-    <NumberInput onInput={props.onInput} value={props.value} label="Duration" />
+    <NumberInput onInput={props.onInput} value={props.value} right="seconds" />
   );
 }

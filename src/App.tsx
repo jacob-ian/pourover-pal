@@ -18,7 +18,6 @@ import CoffeeStrengthAbsolute from "./components/BrewForm/CoffeeStrength/CoffeeS
 import CoffeeStrengthRatios from "./components/BrewForm/CoffeeStrength/CoffeeStrengthRatios";
 
 type InputEvent = React.FormEvent<HTMLInputElement>;
-type SelectEvent = React.FormEvent<HTMLSelectElement>;
 
 export interface BrewDetails {
   waterVolume: number | undefined;
@@ -46,7 +45,12 @@ export default function App() {
   const [brewStarted, setBrewStarted] = useState(false);
   const [brewPaused, setBrewPaused] = useState(false);
 
-  function calculateRatioStrength(absolute: number): number {
+  function calculateRatioStrength(
+    absolute: number | undefined
+  ): number | undefined {
+    if (!absolute) {
+      return absolute;
+    }
     const waterToCoffee = 1 / (absolute / 1000);
     return toTwoDecimalPlaces(waterToCoffee);
   }
@@ -55,7 +59,12 @@ export default function App() {
     return Math.round((number + Number.EPSILON) * 100) / 100;
   }
 
-  function calculateAbsoluteStrength(ratio: number): number {
+  function calculateAbsoluteStrength(
+    ratio: number | undefined
+  ): number | undefined {
+    if (!ratio) {
+      return ratio;
+    }
     const coffeeGramsPerLitre = (1 / ratio) * 1000;
     return toTwoDecimalPlaces(coffeeGramsPerLitre);
   }
@@ -99,7 +108,8 @@ export default function App() {
   }
 
   function handleAbsoluteStrength(event: InputEvent): void {
-    const absolute = event.currentTarget.valueAsNumber;
+    const value = event.currentTarget.value;
+    const absolute = value ? parseFloat(value) : undefined;
     const ratio = calculateRatioStrength(absolute);
     return updateBrewDetails({
       coffeeStrengthAbsolute: absolute,
@@ -108,7 +118,8 @@ export default function App() {
   }
 
   function handleRatioStrength(event: InputEvent): void {
-    const ratio = event.currentTarget.valueAsNumber;
+    const value = event.currentTarget.value;
+    const ratio = value ? parseFloat(value) : undefined;
     const absolute = calculateAbsoluteStrength(ratio);
     return updateBrewDetails({
       coffeeStrengthAbsolute: absolute,
@@ -116,13 +127,10 @@ export default function App() {
     });
   }
 
-  function handleNumberInput(
-    brewDetail: string,
-    event: InputEvent | SelectEvent
-  ): void {
+  function handleNumberInput(brewDetail: string, event: InputEvent): void {
     const value = event.currentTarget.value;
     return updateBrewDetails({
-      [brewDetail]: value ? parseInt(value) : undefined,
+      [brewDetail]: value ? parseFloat(value) : undefined,
     });
   }
 
@@ -191,7 +199,7 @@ export default function App() {
             <Bloom>
               <BloomRatio
                 value={brewDetails.bloomRatio}
-                onChange={(event) => handleNumberInput("bloomRatio", event)}
+                onInput={(event) => handleNumberInput("bloomRatio", event)}
               />
               <BloomDuration
                 value={brewDetails.bloomDuration}
