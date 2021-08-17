@@ -52,11 +52,11 @@ export default function App() {
       return absolute;
     }
     const waterToCoffee = 1 / (absolute / 1000);
-    return toTwoDecimalPlaces(waterToCoffee);
+    return toOneDecimalPlace(waterToCoffee);
   }
 
-  function toTwoDecimalPlaces(number: number): number {
-    return Math.round((number + Number.EPSILON) * 100) / 100;
+  function toOneDecimalPlace(number: number): number {
+    return Math.round((number + Number.EPSILON) * 10) / 10;
   }
 
   function calculateAbsoluteStrength(
@@ -66,7 +66,7 @@ export default function App() {
       return ratio;
     }
     const coffeeGramsPerLitre = (1 / ratio) * 1000;
-    return toTwoDecimalPlaces(coffeeGramsPerLitre);
+    return toOneDecimalPlace(coffeeGramsPerLitre);
   }
 
   function updateBrewDetails(update: Partial<BrewDetails>): void {
@@ -102,14 +102,14 @@ export default function App() {
   ): number | undefined {
     if (coffeeStrengthAbsolute && waterVolume) {
       const coffeeGrinds = coffeeStrengthAbsolute * (waterVolume / 1000);
-      return toTwoDecimalPlaces(coffeeGrinds);
+      return toOneDecimalPlace(coffeeGrinds);
     }
     return undefined;
   }
 
   function handleAbsoluteStrength(event: InputEvent): void {
-    const value = event.currentTarget.value;
-    const absolute = value ? parseFloat(value) : undefined;
+    const value = event.currentTarget.value as unknown as number;
+    const absolute = value ? value : undefined;
     const ratio = calculateRatioStrength(absolute);
     return updateBrewDetails({
       coffeeStrengthAbsolute: absolute,
@@ -118,8 +118,8 @@ export default function App() {
   }
 
   function handleRatioStrength(event: InputEvent): void {
-    const value = event.currentTarget.value;
-    const ratio = value ? parseFloat(value) : undefined;
+    const value = event.currentTarget.value as unknown as number;
+    const ratio = value ? value : undefined;
     const absolute = calculateAbsoluteStrength(ratio);
     return updateBrewDetails({
       coffeeStrengthAbsolute: absolute,
@@ -130,7 +130,7 @@ export default function App() {
   function handleNumberInput(brewDetail: string, event: InputEvent): void {
     const value = event.currentTarget.value;
     return updateBrewDetails({
-      [brewDetail]: value ? parseFloat(value) : undefined,
+      [brewDetail]: value ? value : undefined,
     });
   }
 
