@@ -14,7 +14,7 @@ export default function NumberInput(props: NumberInputProps): JSX.Element {
     <div className="number-input">
       {props.label}
       {props.left}
-      <input type="text" value={props.value || ""} onInput={props.onInput} />
+      <input type="number" value={props.value || ""} onInput={props.onInput} />
       {props.right}
     </div>
   );
