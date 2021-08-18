@@ -4,6 +4,7 @@ import {
   calculateAbsoluteStrength,
   calculateCoffeeGrinds,
   calculateRatioStrength,
+  getLatestGrindsInputs,
 } from "./utils";
 import BrewControls from "./components/BrewControls/BrewControls";
 import BrewForm from "./components/BrewForm/BrewForm";
@@ -29,11 +30,6 @@ export interface BrewDetails {
   bloomRatio: number | undefined;
 }
 
-export interface CoffeeGrindsInputs {
-  waterVolume: number | undefined;
-  coffeeStrengthAbsolute: number | undefined;
-}
-
 export default function App() {
   const [brewDetails, setBrewDetails] = useState<BrewDetails>({
     waterVolume: undefined,
@@ -47,30 +43,10 @@ export default function App() {
   const [brewPaused, setBrewPaused] = useState(false);
 
   function updateBrewDetails(update: Partial<BrewDetails>): void {
-    const { coffeeStrengthAbsolute, waterVolume } =
-      getLatestGrindsInputs(update);
-    const coffeeGrinds = calculateCoffeeGrinds(
-      coffeeStrengthAbsolute,
-      waterVolume
-    );
+    const grindsInputs = getLatestGrindsInputs(brewDetails, update);
+    const coffeeGrinds = calculateCoffeeGrinds(grindsInputs);
 
     return setBrewDetails({ ...brewDetails, ...update, coffeeGrinds });
-  }
-
-  function getLatestGrindsInputs(
-    update: Partial<BrewDetails>
-  ): CoffeeGrindsInputs {
-    let { coffeeStrengthAbsolute, waterVolume } = brewDetails;
-
-    if (update.coffeeStrengthAbsolute) {
-      coffeeStrengthAbsolute = update.coffeeStrengthAbsolute;
-    }
-
-    if (update.waterVolume) {
-      waterVolume = update.waterVolume;
-    }
-
-    return { waterVolume, coffeeStrengthAbsolute };
   }
 
   function handleAbsoluteStrength(event: InputEvent): void {

@@ -1,3 +1,14 @@
+import { BrewDetails } from "./App";
+
+interface CoffeeGrindsInputs {
+  waterVolume: number | undefined;
+  coffeeStrengthAbsolute: number | undefined;
+}
+
+export function toOneDecimalPlace(number: number): number {
+  return Math.round((number + Number.EPSILON) * 10) / 10;
+}
+
 export function calculateRatioStrength(
   absolute: number | undefined
 ): number | undefined {
@@ -6,10 +17,6 @@ export function calculateRatioStrength(
   }
   const waterToCoffee = 1 / (absolute / 1000);
   return toOneDecimalPlace(waterToCoffee);
-}
-
-export function toOneDecimalPlace(number: number): number {
-  return Math.round((number + Number.EPSILON) * 10) / 10;
 }
 
 export function calculateAbsoluteStrength(
@@ -23,12 +30,29 @@ export function calculateAbsoluteStrength(
 }
 
 export function calculateCoffeeGrinds(
-  coffeeStrengthAbsolute: number | undefined,
-  waterVolume: number | undefined
+  inputs: CoffeeGrindsInputs
 ): number | undefined {
+  const { coffeeStrengthAbsolute, waterVolume } = inputs;
   if (!coffeeStrengthAbsolute || !waterVolume) {
     return undefined;
   }
   const coffeeGrinds = coffeeStrengthAbsolute * (waterVolume / 1000);
   return toOneDecimalPlace(coffeeGrinds);
+}
+
+export function getLatestGrindsInputs(
+  original: Partial<BrewDetails>,
+  update: Partial<BrewDetails>
+): CoffeeGrindsInputs {
+  let { coffeeStrengthAbsolute, waterVolume } = original;
+
+  if (update.coffeeStrengthAbsolute) {
+    coffeeStrengthAbsolute = update.coffeeStrengthAbsolute;
+  }
+
+  if (update.waterVolume) {
+    waterVolume = update.waterVolume;
+  }
+
+  return { waterVolume, coffeeStrengthAbsolute };
 }
