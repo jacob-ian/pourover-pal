@@ -1,5 +1,5 @@
 import "./BrewForm.sass";
-import { BrewDetails, DetailsAction } from "../../App";
+import { BrewDetailKey, BrewDetails, DetailsAction } from "../../App";
 import BrewVolume from "./Volume/BrewVolume";
 import CoffeeStrength from "./CoffeeStrength/CoffeeStrength";
 import Bloom from "./Bloom/Bloom";
@@ -18,7 +18,7 @@ export default function BrewForm(props: BrewFormProps): JSX.Element {
     coffeeGrinds,
   } = props;
 
-  function handleFieldUpdate(name: string, value: string): void {
+  function handleFieldUpdate(name: BrewDetailKey, value: string): void {
     return props.dispatch({ type: "update", payload: { name, value } });
   }
 

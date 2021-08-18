@@ -10,23 +10,28 @@ import Header from "./components/Header/Header";
 import ResetButton from "./components/BrewControls/ResetButton/ResetButton";
 import BrewTimer from "./components/BrewControls/BrewTimer/BrewTimer";
 
+interface DetailsUpdatePayload {
+  name: BrewDetailKey;
+  value: string | undefined;
+}
+
 export type DetailsAction =
   | {
       type: "update";
-      payload: {
-        name: string;
-        value: string | undefined;
-      };
+      payload: DetailsUpdatePayload;
     }
   | { type: "reset" };
 
-export interface BrewDetails {
-  waterVolume: number | undefined;
-  coffeeStrengthAbsolute: number | undefined;
-  coffeeGrinds: number | undefined;
-  bloomDuration: number | undefined;
-  bloomRatio: number | undefined;
-}
+export type BrewDetailKey =
+  | "waterVolume"
+  | "coffeeStrengthAbsolute"
+  | "coffeeGrinds"
+  | "bloomDuration"
+  | "bloomRatio";
+
+export type BrewDetails = {
+  [key in BrewDetailKey]: number | undefined;
+};
 
 const DEFAULT_STATE: BrewDetails = {
   waterVolume: undefined,
@@ -46,20 +51,28 @@ function reduceDetails(
 
     case "update":
       const { name, value } = action.payload;
-      let coffeeGrinds = details.coffeeGrinds;
-      if (name === "waterVolume" || name === "coffeeStrengthAbsolute") {
-        const { waterVolume, coffeeStrengthAbsolute } = details;
-        coffeeGrinds = calculateCoffeeGrinds({
-          waterVolume,
-          coffeeStrengthAbsolute,
-          [name]: value,
-        });
-      }
+      const coffeeGrinds = updateCoffeeGrinds(details, action.payload);
       return { ...details, [name]: value ? value : undefined, coffeeGrinds };
 
     default:
       return details;
   }
+}
+
+function updateCoffeeGrinds(
+  details: BrewDetails,
+  payload: DetailsUpdatePayload
+): number | undefined {
+  let { name, value } = payload;
+  let { coffeeGrinds, waterVolume, coffeeStrengthAbsolute } = details;
+  if (name === "waterVolume" || name === "coffeeStrengthAbsolute") {
+    coffeeGrinds = calculateCoffeeGrinds({
+      waterVolume,
+      coffeeStrengthAbsolute,
+      [name]: value,
+    });
+  }
+  return coffeeGrinds;
 }
 
 export default function App() {
