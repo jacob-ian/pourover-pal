@@ -1,4 +1,4 @@
-import VolumeInput from "./VolumeInput";
+import VolumeInput from "./BrewVolume";
 import { render } from "@testing-library/react";
 
 describe("VolumeInput", () => {

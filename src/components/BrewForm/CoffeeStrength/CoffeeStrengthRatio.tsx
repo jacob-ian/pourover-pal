@@ -1,19 +1,21 @@
 import NumberInput from "../../common/NumberInput/NumberInput";
 
-interface BloomRatioProps {
+interface CoffeeStrengthRatioProps {
   onInput: React.FormEventHandler<HTMLInputElement>;
   value: number | undefined;
 }
 
-export default function BloomRatio(props: BloomRatioProps): JSX.Element {
+export default function CoffeeStrengthRatio(
+  props: CoffeeStrengthRatioProps
+): JSX.Element {
   return (
     <NumberInput
-      right=" : 1"
       value={props.value}
       onInput={props.onInput}
-      id="bloom-ratio"
-      maxLength={1}
-      width={20}
+      left="1 : "
+      id="strength-ratio"
+      maxLength={3}
+      width={50}
     />
   );
 }

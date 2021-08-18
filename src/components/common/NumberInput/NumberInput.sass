@@ -1,0 +1,36 @@
+.number-input
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: flex-start
+  font-weight: 500
+  font-size: 1.2rem
+  font-family: var(--font-family)
+  color: var(--text-color)
+  background: var(--input-background)
+  border-radius: 5px
+  padding: 10px
+  margin: 10px
+
+  .number-input-label.left
+    margin-right: 5px
+
+  .number-input-label.right
+    margin-left: 5px
+
+  input
+    flex: 1
+    background: transparent
+    border: none
+    font: inherit
+    color: var(--text-color)
+    width: 100%
+    -moz-appearance: textfield
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button
+      -webkit-appearance: none
+      margin: 0
+
+    &:active, &:focus
+      outline: none

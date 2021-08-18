@@ -1,17 +1,30 @@
-import { ReactNode } from "react";
+import InputLabel from "../../common/InputLabel/InputLabel";
 import "./CoffeeStrength.sass";
+import CoffeeStrengthAbsolute from "./CoffeeStrengthAbsolute";
+import CoffeeStrengthRatio from "./CoffeeStrengthRatio";
 
 interface CoffeeStrengthProps {
-  children: ReactNode;
+  label: string;
+  onAbsoluteInput: React.FormEventHandler<HTMLInputElement>;
+  onRatioInput: React.FormEventHandler<HTMLInputElement>;
+  absolute: number | undefined;
+  ratio: number | undefined;
 }
 
 export default function CoffeeStrength(
   props: CoffeeStrengthProps
 ): JSX.Element {
   return (
-    <div className="coffee-strength">
-      <h3>Coffee strength:</h3>
-      <div className="coffee-strength-container">{props.children}</div>
-    </div>
+    <>
+      <InputLabel label={props.label} for="strength-abs" />
+      <div className="coffee-strength">
+        <CoffeeStrengthAbsolute
+          value={props.absolute}
+          onInput={props.onAbsoluteInput}
+        />
+        =
+        <CoffeeStrengthRatio value={props.ratio} onInput={props.onRatioInput} />
+      </div>
+    </>
   );
 }

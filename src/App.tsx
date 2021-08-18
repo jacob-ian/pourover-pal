@@ -8,14 +8,10 @@ import EndButton from "./components/BrewControls/EndButton/EndButton";
 import Header from "./components/Header/Header";
 import ResetButton from "./components/BrewControls/ResetButton/ResetButton";
 import BrewTimer from "./components/BrewControls/BrewTimer/BrewTimer";
-import VolumeInput from "./components/BrewForm/VolumeInput";
-import BloomDuration from "./components/BrewForm/Bloom/BloomDuration";
 import Bloom from "./components/BrewForm/Bloom/Bloom";
-import BloomRatio from "./components/BrewForm/Bloom/BloomRatio";
 import CoffeeGrinds from "./components/BrewForm/CoffeeGrinds/CoffeeGrinds";
 import CoffeeStrength from "./components/BrewForm/CoffeeStrength/CoffeeStrength";
-import CoffeeStrengthAbsolute from "./components/BrewForm/CoffeeStrength/CoffeeStrengthAbsolute";
-import CoffeeStrengthRatios from "./components/BrewForm/CoffeeStrength/CoffeeStrengthRatios";
+import BrewVolume from "./components/BrewForm/Volume/BrewVolume";
 
 type InputEvent = React.FormEvent<HTMLInputElement>;
 
@@ -39,8 +35,8 @@ export default function App() {
     coffeeStrengthAbsolute: 60,
     coffeeStrengthRatio: calculateRatioStrength(60),
     coffeeGrinds: undefined,
-    bloomDuration: undefined,
-    bloomRatio: undefined,
+    bloomDuration: 45,
+    bloomRatio: 2,
   });
   const [brewStarted, setBrewStarted] = useState(false);
   const [brewPaused, setBrewPaused] = useState(false);
@@ -100,11 +96,11 @@ export default function App() {
     coffeeStrengthAbsolute: number | undefined,
     waterVolume: number | undefined
   ): number | undefined {
-    if (coffeeStrengthAbsolute && waterVolume) {
-      const coffeeGrinds = coffeeStrengthAbsolute * (waterVolume / 1000);
-      return toOneDecimalPlace(coffeeGrinds);
+    if (!coffeeStrengthAbsolute || !waterVolume) {
+      return undefined;
     }
-    return undefined;
+    const coffeeGrinds = coffeeStrengthAbsolute * (waterVolume / 1000);
+    return toOneDecimalPlace(coffeeGrinds);
   }
 
   function handleAbsoluteStrength(event: InputEvent): void {
@@ -182,30 +178,31 @@ export default function App() {
           <BrewSteps />
         ) : (
           <BrewForm>
-            <VolumeInput
+            <BrewVolume
+              label="Brew volume:"
               value={brewDetails.waterVolume}
               onInput={(event) => handleNumberInput("waterVolume", event)}
             />
-            <CoffeeStrength>
-              <CoffeeStrengthAbsolute
-                value={brewDetails.coffeeStrengthAbsolute}
-                onInput={handleAbsoluteStrength}
-              />
-              <CoffeeStrengthRatios
-                value={brewDetails.coffeeStrengthRatio}
-                onInput={handleRatioStrength}
-              />
-            </CoffeeStrength>
-            <Bloom>
-              <BloomRatio
-                value={brewDetails.bloomRatio}
-                onInput={(event) => handleNumberInput("bloomRatio", event)}
-              />
-              <BloomDuration
-                value={brewDetails.bloomDuration}
-                onInput={(event) => handleNumberInput("bloomDuration", event)}
-              />
-            </Bloom>
+
+            <CoffeeStrength
+              label="Coffee strength:"
+              absolute={brewDetails.coffeeStrengthAbsolute}
+              onAbsoluteInput={handleAbsoluteStrength}
+              ratio={brewDetails.coffeeStrengthRatio}
+              onRatioInput={handleRatioStrength}
+            />
+            <Bloom
+              label="Bloom:"
+              bloomRatio={brewDetails.bloomRatio}
+              onBloomRatioInput={(event) =>
+                handleNumberInput("bloomRatio", event)
+              }
+              bloomDuration={brewDetails.bloomDuration}
+              onBloomDurationInput={(event) =>
+                handleNumberInput("bloomDuration", event)
+              }
+            />
+
             <CoffeeGrinds value={brewDetails.coffeeGrinds} />
           </BrewForm>
         )}

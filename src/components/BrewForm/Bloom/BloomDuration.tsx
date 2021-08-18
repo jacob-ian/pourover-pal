@@ -1,4 +1,4 @@
-import NumberInput from "../../common/NumberInput";
+import NumberInput from "../../common/NumberInput/NumberInput";
 
 interface BloomDurationProps {
   onInput: React.FormEventHandler<HTMLInputElement>;
@@ -7,6 +7,13 @@ interface BloomDurationProps {
 
 export default function BloomDuration(props: BloomDurationProps): JSX.Element {
   return (
-    <NumberInput onInput={props.onInput} value={props.value} right="seconds" />
+    <NumberInput
+      onInput={props.onInput}
+      value={props.value}
+      right="seconds"
+      id="bloom-duration"
+      maxLength={3}
+      width={50}
+    />
   );
 }
