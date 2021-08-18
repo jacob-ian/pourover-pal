@@ -31,14 +31,16 @@ export interface BrewDetails {
 }
 
 export default function App() {
-  const [brewDetails, setBrewDetails] = useState<BrewDetails>({
+  const DEFAULT_STATE: BrewDetails = {
     waterVolume: undefined,
     coffeeStrengthAbsolute: 60,
     coffeeStrengthRatio: calculateRatioStrength(60),
     coffeeGrinds: undefined,
     bloomDuration: 45,
     bloomRatio: 2,
-  });
+  };
+
+  const [brewDetails, setBrewDetails] = useState<BrewDetails>(DEFAULT_STATE);
   const [brewStarted, setBrewStarted] = useState(false);
   const [brewPaused, setBrewPaused] = useState(false);
 
@@ -106,14 +108,7 @@ export default function App() {
   }
 
   function handleResetButton(): void {
-    setBrewDetails({
-      waterVolume: undefined,
-      coffeeStrengthAbsolute: 60,
-      coffeeStrengthRatio: calculateRatioStrength(60),
-      coffeeGrinds: undefined,
-      bloomDuration: 45,
-      bloomRatio: 2,
-    });
+    setBrewDetails(DEFAULT_STATE);
   }
 
   return (
