@@ -1,3 +1,4 @@
+import "./EndButton.sass";
 import IconButton from "../../common/IconButton/IconButton";
 
 interface EndButtonProps {
@@ -11,6 +12,7 @@ export default function EndButton(props: EndButtonProps): JSX.Element {
       onClick={props.onClick}
       iconName="close"
       disabled={props.disabled}
+      className="end-button"
     />
   );
 }
