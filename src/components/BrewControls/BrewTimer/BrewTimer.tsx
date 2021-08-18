@@ -12,7 +12,11 @@ export default function BrewTimer(props: BrewTimerProps): JSX.Element {
 
   function getTimerContent() {
     if (started) {
-      return paused ? "start" : "pause";
+      return (
+        <span className="brew-play-pause material-icons">
+          {paused ? "play_arrow" : "pause"}
+        </span>
+      );
     }
     return "Brew";
   }

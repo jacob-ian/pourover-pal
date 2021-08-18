@@ -1,11 +1,12 @@
 *, *::before, *::after
   box-sizing: border-box
 
-html
+\:root
   --card-background: #463526
   --background: #211912
   --text-color: #fff
   --font-family: Nunito, Arial, Helvetica, sans-serif
+  --input-background: rgba(0,0,0,0.4)
 
 html, body
   margin: 0
@@ -19,3 +20,8 @@ html, body
   height: 100%
   display: flex
   flex-direction: column
+
+.row
+  display: flex
+  flex-direction: row
+  align-items: center
