@@ -1,3 +1,8 @@
+import React, { useEffect, useState } from "react";
+import {
+  calculateAbsoluteStrength,
+  calculateRatioStrength,
+} from "../../../utils";
 import InputLabel from "../../common/InputLabel/InputLabel";
 import "./CoffeeStrength.sass";
 import CoffeeStrengthAbsolute from "./CoffeeStrengthAbsolute";
@@ -5,25 +10,36 @@ import CoffeeStrengthRatio from "./CoffeeStrengthRatio";
 
 interface CoffeeStrengthProps {
   label: string;
-  onAbsoluteInput: React.FormEventHandler<HTMLInputElement>;
-  onRatioInput: React.FormEventHandler<HTMLInputElement>;
-  absolute: number | undefined;
-  ratio: number | undefined;
+  onInput: (value: string) => void;
+  value: number | undefined;
 }
 
 export default function CoffeeStrength(
   props: CoffeeStrengthProps
 ): JSX.Element {
+  const { value } = props;
+  const [ratio, setRatio] = useState<number | undefined>();
+
+  useEffect(() => {
+    setRatio(calculateRatioStrength(value));
+  }, [value]);
+
+  function handleRatioInput(e: React.FormEvent<HTMLInputElement>): void {
+    const value = e.currentTarget.value as unknown as number;
+    const absolute = calculateAbsoluteStrength(value ? value : undefined);
+    return props.onInput(absolute ? `${absolute}` : "");
+  }
+
   return (
     <>
       <InputLabel label={props.label} for="strength-abs" />
       <div className="coffee-strength">
         <CoffeeStrengthAbsolute
-          value={props.absolute}
-          onInput={props.onAbsoluteInput}
+          value={props.value}
+          onInput={(e) => props.onInput(e.currentTarget.value)}
         />
         =
-        <CoffeeStrengthRatio value={props.ratio} onInput={props.onRatioInput} />
+        <CoffeeStrengthRatio value={ratio} onInput={handleRatioInput} />
       </div>
     </>
   );
