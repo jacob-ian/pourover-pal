@@ -23,7 +23,7 @@ export default function BrewForm(props: BrewFormProps): JSX.Element {
   }
 
   return (
-    <div className="brew-form">
+    <form className="brew-form">
       <BrewVolume
         label="Brew volume:"
         value={waterVolume}
@@ -48,6 +48,6 @@ export default function BrewForm(props: BrewFormProps): JSX.Element {
       />
 
       <CoffeeGrinds value={coffeeGrinds} />
-    </div>
+    </form>
   );
 }
