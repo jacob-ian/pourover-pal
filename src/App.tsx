@@ -111,8 +111,8 @@ export default function App() {
       coffeeStrengthAbsolute: 60,
       coffeeStrengthRatio: calculateRatioStrength(60),
       coffeeGrinds: undefined,
-      bloomDuration: undefined,
-      bloomRatio: undefined,
+      bloomDuration: 45,
+      bloomRatio: 2,
     });
   }
 
@@ -121,7 +121,7 @@ export default function App() {
       <Header />
       <Card>
         {brewStarted ? (
-          <BrewSteps />
+          <BrewSteps {...brewDetails} brewPaused={brewPaused} />
         ) : (
           <BrewForm>
             <BrewVolume
