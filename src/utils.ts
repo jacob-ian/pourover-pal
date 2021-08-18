@@ -2,7 +2,7 @@ import { BrewDetails } from "./App";
 
 interface CoffeeGrindsInputs {
   waterVolume: number | undefined;
-  coffeeStrengthAbsolute: number | undefined;
+  coffeeStrength: number | undefined;
 }
 
 export function toOneDecimalPlace(number: number): number {
@@ -32,11 +32,11 @@ export function calculateAbsoluteStrength(
 export function calculateCoffeeGrinds(
   inputs: CoffeeGrindsInputs
 ): number | undefined {
-  const { coffeeStrengthAbsolute, waterVolume } = inputs;
-  if (!coffeeStrengthAbsolute || !waterVolume) {
+  const { coffeeStrength, waterVolume } = inputs;
+  if (!coffeeStrength || !waterVolume) {
     return undefined;
   }
-  const coffeeGrinds = coffeeStrengthAbsolute * (waterVolume / 1000);
+  const coffeeGrinds = coffeeStrength * (waterVolume / 1000);
   return toOneDecimalPlace(coffeeGrinds);
 }
 
@@ -44,15 +44,15 @@ export function getLatestGrindsInputs(
   original: Partial<BrewDetails>,
   update: Partial<BrewDetails>
 ): CoffeeGrindsInputs {
-  let { coffeeStrengthAbsolute, waterVolume } = original;
+  let { coffeeStrength, waterVolume } = original;
 
-  if (update.coffeeStrengthAbsolute) {
-    coffeeStrengthAbsolute = update.coffeeStrengthAbsolute;
+  if (update.coffeeStrength) {
+    coffeeStrength = update.coffeeStrength;
   }
 
   if (update.waterVolume) {
     waterVolume = update.waterVolume;
   }
 
-  return { waterVolume, coffeeStrengthAbsolute };
+  return { waterVolume, coffeeStrength };
 }

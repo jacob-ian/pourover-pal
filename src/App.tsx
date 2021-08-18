@@ -24,7 +24,7 @@ export type DetailsAction =
 
 export type BrewDetailKey =
   | "waterVolume"
-  | "coffeeStrengthAbsolute"
+  | "coffeeStrength"
   | "coffeeGrinds"
   | "bloomDuration"
   | "bloomRatio";
@@ -35,7 +35,7 @@ export type BrewDetails = {
 
 const DEFAULT_STATE: BrewDetails = {
   waterVolume: undefined,
-  coffeeStrengthAbsolute: 60,
+  coffeeStrength: 60,
   coffeeGrinds: undefined,
   bloomDuration: 45,
   bloomRatio: 2,
@@ -64,11 +64,11 @@ function updateCoffeeGrinds(
   payload: DetailsUpdatePayload
 ): number | undefined {
   let { name, value } = payload;
-  let { coffeeGrinds, waterVolume, coffeeStrengthAbsolute } = details;
-  if (name === "waterVolume" || name === "coffeeStrengthAbsolute") {
+  let { coffeeGrinds, waterVolume, coffeeStrength } = details;
+  if (name === "waterVolume" || name === "coffeeStrength") {
     coffeeGrinds = calculateCoffeeGrinds({
       waterVolume,
-      coffeeStrengthAbsolute,
+      coffeeStrength,
       [name]: value,
     });
   }

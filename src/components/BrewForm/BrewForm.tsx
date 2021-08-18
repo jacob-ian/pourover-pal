@@ -12,7 +12,7 @@ interface BrewFormProps extends BrewDetails {
 export default function BrewForm(props: BrewFormProps): JSX.Element {
   const {
     waterVolume,
-    coffeeStrengthAbsolute,
+    coffeeStrength,
     bloomDuration,
     bloomRatio,
     coffeeGrinds,
@@ -32,8 +32,8 @@ export default function BrewForm(props: BrewFormProps): JSX.Element {
 
       <CoffeeStrength
         label="Coffee strength:"
-        value={coffeeStrengthAbsolute}
-        onInput={(value) => handleFieldUpdate("coffeeStrengthAbsolute", value)}
+        value={coffeeStrength}
+        onInput={(value) => handleFieldUpdate("coffeeStrength", value)}
       />
       <Bloom
         label="Bloom:"
