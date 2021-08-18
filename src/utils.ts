@@ -12,8 +12,8 @@ export function toOneDecimalPlace(number: number): number {
 export function calculateRatioStrength(
   absolute: number | undefined
 ): number | undefined {
-  if (!absolute) {
-    return absolute;
+  if (!absolute || absolute <= 0) {
+    return undefined;
   }
   const waterToCoffee = 1 / (absolute / 1000);
   return toOneDecimalPlace(waterToCoffee);
@@ -22,8 +22,8 @@ export function calculateRatioStrength(
 export function calculateAbsoluteStrength(
   ratio: number | undefined
 ): number | undefined {
-  if (!ratio) {
-    return ratio;
+  if (!ratio || ratio <= 0) {
+    return undefined;
   }
   const coffeeGramsPerLitre = (1 / ratio) * 1000;
   return toOneDecimalPlace(coffeeGramsPerLitre);
