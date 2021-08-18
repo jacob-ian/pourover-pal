@@ -1,5 +1,10 @@
 import "./App.sass";
 import React, { useState } from "react";
+import {
+  calculateAbsoluteStrength,
+  calculateCoffeeGrinds,
+  calculateRatioStrength,
+} from "./utils";
 import BrewControls from "./components/BrewControls/BrewControls";
 import BrewForm from "./components/BrewForm/BrewForm";
 import BrewSteps from "./components/BrewSteps/BrewSteps";
@@ -41,30 +46,6 @@ export default function App() {
   const [brewStarted, setBrewStarted] = useState(false);
   const [brewPaused, setBrewPaused] = useState(false);
 
-  function calculateRatioStrength(
-    absolute: number | undefined
-  ): number | undefined {
-    if (!absolute) {
-      return absolute;
-    }
-    const waterToCoffee = 1 / (absolute / 1000);
-    return toOneDecimalPlace(waterToCoffee);
-  }
-
-  function toOneDecimalPlace(number: number): number {
-    return Math.round((number + Number.EPSILON) * 10) / 10;
-  }
-
-  function calculateAbsoluteStrength(
-    ratio: number | undefined
-  ): number | undefined {
-    if (!ratio) {
-      return ratio;
-    }
-    const coffeeGramsPerLitre = (1 / ratio) * 1000;
-    return toOneDecimalPlace(coffeeGramsPerLitre);
-  }
-
   function updateBrewDetails(update: Partial<BrewDetails>): void {
     const { coffeeStrengthAbsolute, waterVolume } =
       getLatestGrindsInputs(update);
@@ -90,17 +71,6 @@ export default function App() {
     }
 
     return { waterVolume, coffeeStrengthAbsolute };
-  }
-
-  function calculateCoffeeGrinds(
-    coffeeStrengthAbsolute: number | undefined,
-    waterVolume: number | undefined
-  ): number | undefined {
-    if (!coffeeStrengthAbsolute || !waterVolume) {
-      return undefined;
-    }
-    const coffeeGrinds = coffeeStrengthAbsolute * (waterVolume / 1000);
-    return toOneDecimalPlace(coffeeGrinds);
   }
 
   function handleAbsoluteStrength(event: InputEvent): void {
