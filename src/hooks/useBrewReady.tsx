@@ -1,7 +1,7 @@
 import { Dispatch, useEffect } from "react";
 import { BrewDetails, MainAction } from "../App";
 
-export function useReady(
+export function useBrewReady(
   brewDetails: BrewDetails,
   dispatch: Dispatch<MainAction>
 ): void {

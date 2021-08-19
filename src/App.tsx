@@ -1,11 +1,11 @@
 import "./App.sass";
-import { Dispatch, useEffect, useReducer } from "react";
+import { useReducer } from "react";
 import BrewControls from "./components/BrewControls/BrewControls";
 import BrewForm from "./components/BrewForm/BrewForm";
 import BrewSteps from "./components/BrewSteps/BrewSteps";
 import Card from "./components/Card";
 import Header from "./components/Header/Header";
-import { useReady } from "./hooks/useReady";
+import { useBrewReady } from "./hooks/useBrewReady";
 
 export interface MainState {
   brewStarted: boolean;
@@ -92,7 +92,7 @@ export default function App() {
     DEFAULT_DETAILS
   );
 
-  useReady(brewDetails, dispatchMain);
+  useBrewReady(brewDetails, dispatchMain);
 
   return (
     <div className="App">
