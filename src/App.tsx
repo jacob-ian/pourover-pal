@@ -1,6 +1,5 @@
 import "./App.sass";
-import React, { useReducer, useState } from "react";
-import { calculateCoffeeGrinds } from "./utils";
+import { useReducer, useState } from "react";
 import BrewControls from "./components/BrewControls/BrewControls";
 import BrewForm from "./components/BrewForm/BrewForm";
 import BrewSteps from "./components/BrewSteps/BrewSteps";
@@ -25,7 +24,6 @@ export type DetailsAction =
 export type BrewDetailKey =
   | "waterVolume"
   | "coffeeStrength"
-  | "coffeeGrinds"
   | "bloomDuration"
   | "bloomRatio";
 
@@ -36,7 +34,6 @@ export type BrewDetails = {
 const DEFAULT_STATE: BrewDetails = {
   waterVolume: undefined,
   coffeeStrength: 60,
-  coffeeGrinds: undefined,
   bloomDuration: 45,
   bloomRatio: 2,
 };
@@ -51,28 +48,11 @@ function reduceDetails(
 
     case "update":
       const { name, value } = action.payload;
-      const coffeeGrinds = updateCoffeeGrinds(details, action.payload);
-      return { ...details, [name]: value ? value : undefined, coffeeGrinds };
+      return { ...details, [name]: value ? value : undefined };
 
     default:
       return details;
   }
-}
-
-function updateCoffeeGrinds(
-  details: BrewDetails,
-  payload: DetailsUpdatePayload
-): number | undefined {
-  let { name, value } = payload;
-  let { coffeeGrinds, waterVolume, coffeeStrength } = details;
-  if (name === "waterVolume" || name === "coffeeStrength") {
-    coffeeGrinds = calculateCoffeeGrinds({
-      waterVolume,
-      coffeeStrength,
-      [name]: value,
-    });
-  }
-  return coffeeGrinds;
 }
 
 export default function App() {
@@ -99,9 +79,9 @@ export default function App() {
   }
 
   function canStartBrew(): boolean {
-    const { waterVolume, coffeeGrinds, bloomDuration, bloomRatio } =
+    const { waterVolume, coffeeStrength, bloomDuration, bloomRatio } =
       brewDetails;
-    return !!waterVolume && !!coffeeGrinds && !!bloomDuration && !!bloomRatio;
+    return !!waterVolume && !!coffeeStrength && !!bloomDuration && !!bloomRatio;
   }
 
   function startBrew(): void {

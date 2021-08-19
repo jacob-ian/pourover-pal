@@ -10,13 +10,7 @@ interface BrewFormProps extends BrewDetails {
 }
 
 export default function BrewForm(props: BrewFormProps): JSX.Element {
-  const {
-    waterVolume,
-    coffeeStrength,
-    bloomDuration,
-    bloomRatio,
-    coffeeGrinds,
-  } = props;
+  const { waterVolume, coffeeStrength, bloomDuration, bloomRatio } = props;
 
   function handleFieldUpdate(name: BrewDetailKey, value: string): void {
     return props.dispatch({ type: "update", payload: { name, value } });
@@ -49,7 +43,7 @@ export default function BrewForm(props: BrewFormProps): JSX.Element {
         }
       />
 
-      <CoffeeGrinds value={coffeeGrinds} />
+      <CoffeeGrinds waterVolume={waterVolume} coffeeStrength={coffeeStrength} />
     </form>
   );
 }

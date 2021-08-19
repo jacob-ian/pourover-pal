@@ -1,11 +1,15 @@
+import { calculateCoffeeGrinds } from "../../../utils";
 import "./CoffeeGrinds.sass";
 
 interface CoffeeGrindsProps {
-  value: number | undefined;
+  waterVolume: number | undefined;
+  coffeeStrength: number | undefined;
 }
 
 export default function CoffeeGrinds(props: CoffeeGrindsProps): JSX.Element {
-  const { value } = props;
-  const message = value ? `Use ${props.value}g of coffee` : "";
+  const { waterVolume, coffeeStrength } = props;
+  const coffeeGrinds = calculateCoffeeGrinds({ waterVolume, coffeeStrength });
+
+  const message = coffeeGrinds ? `Use ${coffeeGrinds}g of coffee` : "";
   return <div className="coffee-grinds">{message}</div>;
 }
