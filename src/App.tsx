@@ -7,13 +7,13 @@ import Card from "./components/Card";
 import Header from "./components/Header/Header";
 import { useBrewReady } from "./hooks/useBrewReady";
 
-export interface MainState {
-  brewStarted: boolean;
-  brewPaused: boolean;
-  brewReady: boolean;
+export interface BrewState {
+  started: boolean;
+  paused: boolean;
+  ready: boolean;
 }
 
-export type MainAction =
+export type BrewStateAction =
   | { type: "pause" }
   | { type: "start" }
   | { type: "stop" }
@@ -47,16 +47,16 @@ const DEFAULT_DETAILS: BrewDetails = {
   bloomRatio: 2,
 };
 
-function mainReducer(state: MainState, action: MainAction): MainState {
+function brewReducer(state: BrewState, action: BrewStateAction): BrewState {
   switch (action.type) {
     case "start":
-      return { ...state, brewPaused: false, brewStarted: true };
+      return { ...state, paused: false, started: true };
     case "stop":
-      return { ...state, brewPaused: false, brewStarted: false };
+      return { ...state, paused: false, started: false };
     case "pause":
-      return { ...state, brewPaused: true, brewStarted: true };
+      return { ...state, paused: true, started: true };
     case "ready":
-      return { ...state, brewReady: action.payload.value };
+      return { ...state, ready: action.payload.value };
 
     default:
       return state;
@@ -81,10 +81,10 @@ function detailsReducer(
 }
 
 export default function App() {
-  const [main, dispatchMain] = useReducer(mainReducer, {
-    brewStarted: false,
-    brewPaused: false,
-    brewReady: false,
+  const [brew, dispatchBrew] = useReducer(brewReducer, {
+    started: false,
+    paused: false,
+    ready: false,
   });
 
   const [brewDetails, dispatchDetails] = useReducer(
@@ -92,20 +92,20 @@ export default function App() {
     DEFAULT_DETAILS
   );
 
-  useBrewReady(brewDetails, dispatchMain);
+  useBrewReady(brewDetails, dispatchBrew);
 
   return (
     <div className="App">
       <Header />
       <Card>
-        {main.brewStarted ? (
-          <BrewSteps {...brewDetails} brewPaused={main.brewPaused} />
+        {brew.started ? (
+          <BrewSteps {...brewDetails} paused={brew.paused} />
         ) : (
           <BrewForm {...brewDetails} dispatch={dispatchDetails} />
         )}
         <BrewControls
-          {...main}
-          dispatchMain={dispatchMain}
+          {...brew}
+          dispatchBrew={dispatchBrew}
           dispatchDetails={dispatchDetails}
         />
       </Card>

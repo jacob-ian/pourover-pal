@@ -2,7 +2,7 @@ import { BrewDetails } from "../../App";
 import "./BrewSteps.sass";
 
 interface BrewStepsProps extends BrewDetails {
-  brewPaused: boolean;
+  paused: boolean;
 }
 
 export default function BrewSteps(props: BrewStepsProps): JSX.Element {

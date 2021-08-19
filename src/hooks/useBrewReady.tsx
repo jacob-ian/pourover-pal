@@ -1,9 +1,9 @@
 import { Dispatch, useEffect } from "react";
-import { BrewDetails, MainAction } from "../App";
+import { BrewDetails, BrewStateAction } from "../App";
 
 export function useBrewReady(
   brewDetails: BrewDetails,
-  dispatch: Dispatch<MainAction>
+  dispatch: Dispatch<BrewStateAction>
 ): void {
   function canStartBrew(): boolean {
     const { waterVolume, coffeeStrength, bloomDuration, bloomRatio } =

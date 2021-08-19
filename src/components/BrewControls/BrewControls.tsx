@@ -1,40 +1,39 @@
-import { DetailsAction, MainAction, MainState } from "../../App";
+import { DetailsAction, BrewStateAction, BrewState } from "../../App";
 import "./BrewControls.sass";
 import BrewTimer from "./BrewTimer/BrewTimer";
 import EndButton from "./EndButton/EndButton";
 import ResetButton from "./ResetButton/ResetButton";
 
-interface BrewControlsProps extends MainState {
-  dispatchMain: React.Dispatch<MainAction>;
+interface BrewControlsProps extends BrewState {
+  dispatchBrew: React.Dispatch<BrewStateAction>;
   dispatchDetails: React.Dispatch<DetailsAction>;
 }
 
 export default function BrewControls(props: BrewControlsProps): JSX.Element {
-  const { brewPaused, brewReady, brewStarted, dispatchMain, dispatchDetails } =
-    props;
+  const { paused, ready, started, dispatchBrew, dispatchDetails } = props;
 
   function handleBrewTimerClick(): void {
-    if (brewStarted) {
-      return dispatchMain({ type: brewPaused ? "start" : "pause" });
+    if (started) {
+      return dispatchBrew({ type: paused ? "start" : "pause" });
     }
-    return dispatchMain({ type: "start" });
+    return dispatchBrew({ type: "start" });
   }
 
   return (
     <div className="brew-controls">
       <ResetButton
         onClick={() => dispatchDetails({ type: "reset" })}
-        disabled={brewStarted}
+        disabled={started}
       />
       <BrewTimer
         onClick={handleBrewTimerClick}
-        ready={brewReady}
-        started={brewStarted}
-        paused={brewPaused}
+        ready={ready}
+        started={started}
+        paused={paused}
       />
       <EndButton
-        onClick={() => dispatchMain({ type: "stop" })}
-        disabled={!brewStarted}
+        onClick={() => dispatchBrew({ type: "stop" })}
+        disabled={!started}
       />
     </div>
   );
