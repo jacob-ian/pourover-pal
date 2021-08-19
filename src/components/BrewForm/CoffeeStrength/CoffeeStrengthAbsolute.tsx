@@ -2,7 +2,7 @@ import NumberInput from "../../common/NumberInput/NumberInput";
 
 interface CoffeeStrengthAbsProps {
   value: number | undefined;
-  onInput: React.FormEventHandler<HTMLInputElement>;
+  onChange: React.FormEventHandler<HTMLInputElement>;
 }
 
 export default function CoffeeStrengthAbsolute(
@@ -11,7 +11,7 @@ export default function CoffeeStrengthAbsolute(
   return (
     <NumberInput
       value={props.value}
-      onInput={props.onInput}
+      onChange={props.onChange}
       right="g/L"
       id="strength-abs"
       maxLength={4}

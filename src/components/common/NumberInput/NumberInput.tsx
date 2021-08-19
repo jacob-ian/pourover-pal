@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import "./NumberInput.sass";
 
 interface NumberInputProps {
-  onInput: React.FormEventHandler<HTMLInputElement>;
+  onChange: React.FormEventHandler<HTMLInputElement>;
   value: number | undefined;
   id: string;
   maxLength: number;
@@ -30,7 +30,7 @@ export default function NumberInput(props: NumberInputProps): JSX.Element {
         ref={inputRef}
         type="number"
         value={inputValue}
-        onInput={props.onInput}
+        onChange={props.onChange}
         id={props.id}
         style={{ width: props.width + "px" }}
       />

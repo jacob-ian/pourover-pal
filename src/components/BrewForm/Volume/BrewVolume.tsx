@@ -4,7 +4,7 @@ import NumberInput from "../../common/NumberInput/NumberInput";
 interface BrewVolumeProps {
   label: string;
   value: number | undefined;
-  onInput: React.FormEventHandler<HTMLInputElement>;
+  onChange: React.FormEventHandler<HTMLInputElement>;
 }
 
 export default function BrewVolume(props: BrewVolumeProps): JSX.Element {
@@ -17,7 +17,7 @@ export default function BrewVolume(props: BrewVolumeProps): JSX.Element {
         id={id}
         right="mL"
         value={props.value}
-        onInput={props.onInput}
+        onChange={props.onChange}
         width={60}
         maxLength={5}
       />

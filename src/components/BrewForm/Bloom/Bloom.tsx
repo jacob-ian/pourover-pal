@@ -4,8 +4,8 @@ import BloomRatio from "./BloomRatio";
 
 interface BloomProps {
   label: string;
-  onBloomDurationInput: React.FormEventHandler<HTMLInputElement>;
-  onBloomRatioInput: React.FormEventHandler<HTMLInputElement>;
+  onBloomDurationChange: React.FormEventHandler<HTMLInputElement>;
+  onBloomRatioChange: React.FormEventHandler<HTMLInputElement>;
   bloomDuration: number | undefined;
   bloomRatio: number | undefined;
 }
@@ -18,14 +18,14 @@ export default function Bloom(props: BloomProps): JSX.Element {
         Duration
         <BloomDuration
           value={props.bloomDuration}
-          onInput={props.onBloomDurationInput}
+          onChange={props.onBloomDurationChange}
         />
       </div>
       <div className="row">
         Water
         <BloomRatio
           value={props.bloomRatio}
-          onInput={props.onBloomRatioInput}
+          onChange={props.onBloomRatioChange}
         />
         Coffee
       </div>

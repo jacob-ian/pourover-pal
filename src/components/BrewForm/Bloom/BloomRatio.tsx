@@ -1,7 +1,7 @@
 import NumberInput from "../../common/NumberInput/NumberInput";
 
 interface BloomRatioProps {
-  onInput: React.FormEventHandler<HTMLInputElement>;
+  onChange: React.FormEventHandler<HTMLInputElement>;
   value: number | undefined;
 }
 
@@ -10,7 +10,7 @@ export default function BloomRatio(props: BloomRatioProps): JSX.Element {
     <NumberInput
       right=" : 1"
       value={props.value}
-      onInput={props.onInput}
+      onChange={props.onChange}
       id="bloom-ratio"
       maxLength={1}
       width={20}

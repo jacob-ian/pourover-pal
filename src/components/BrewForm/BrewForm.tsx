@@ -27,22 +27,24 @@ export default function BrewForm(props: BrewFormProps): JSX.Element {
       <BrewVolume
         label="Brew volume:"
         value={waterVolume}
-        onInput={(e) => handleFieldUpdate("waterVolume", e.currentTarget.value)}
+        onChange={(e) =>
+          handleFieldUpdate("waterVolume", e.currentTarget.value)
+        }
       />
 
       <CoffeeStrength
         label="Coffee strength:"
         value={coffeeStrength}
-        onInput={(value) => handleFieldUpdate("coffeeStrength", value)}
+        onChange={(value) => handleFieldUpdate("coffeeStrength", value)}
       />
       <Bloom
         label="Bloom:"
         bloomRatio={bloomRatio}
-        onBloomRatioInput={(e) =>
+        onBloomRatioChange={(e) =>
           handleFieldUpdate("bloomRatio", e.currentTarget.value)
         }
         bloomDuration={bloomDuration}
-        onBloomDurationInput={(e) =>
+        onBloomDurationChange={(e) =>
           handleFieldUpdate("bloomDuration", e.currentTarget.value)
         }
       />
