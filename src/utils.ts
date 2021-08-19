@@ -36,6 +36,10 @@ export function calculateCoffeeGrinds(
   if (!coffeeStrength || !waterVolume) {
     return undefined;
   }
+
+  if (coffeeStrength < 0 || waterVolume < 0) {
+    return undefined;
+  }
   const coffeeGrinds = coffeeStrength * (waterVolume / 1000);
   return toOneDecimalPlace(coffeeGrinds);
 }
