@@ -1,4 +1,4 @@
-import { render, cleanup } from "@testing-library/react";
+import { render, cleanup, fireEvent } from "@testing-library/react";
 import { BrewState } from "../../App";
 import BrewControls from "./BrewControls";
 
@@ -142,6 +142,105 @@ describe("BrewControls", () => {
           (button) => button.textContent === buttonContent
         )[0] as HTMLButtonElement;
         expect(button.disabled).toBe(expectedDisabled);
+      });
+    });
+  });
+
+  describe("Test handling BrewTimer clicks", () => {
+    const tests: {
+      should: string;
+      started: boolean;
+      paused: boolean;
+      buttonText: string;
+      expectedAction: string;
+    }[] = [
+      {
+        should: "dispatch pause action on click when brew started",
+        started: true,
+        paused: false,
+        buttonText: "pause",
+        expectedAction: "pause",
+      },
+      {
+        should: "dispatch start action on click when brew paused",
+        started: true,
+        paused: true,
+        buttonText: "play_arrow",
+        expectedAction: "start",
+      },
+      {
+        should: "dispatch start action on click when brew not started",
+        started: false,
+        paused: false,
+        buttonText: "Brew",
+        expectedAction: "start",
+      },
+    ];
+
+    tests.forEach((test) => {
+      const { should, started, paused, buttonText, expectedAction } = test;
+      it(`Should ${should}`, () => {
+        const dispatchBrew = jest.fn();
+        const state = { started, paused, ready: true };
+        const component = (
+          <BrewControls
+            {...state}
+            dispatchBrew={dispatchBrew}
+            dispatchDetails={() => {}}
+          />
+        );
+
+        const { getByText } = render(component);
+        const button = getByText(buttonText) as HTMLButtonElement;
+        fireEvent.click(button);
+        expect(dispatchBrew).toHaveBeenCalledWith({ type: expectedAction });
+      });
+    });
+  });
+
+  describe("Test handling reset and end button clicks", () => {
+    const tests: {
+      should: string;
+      started: boolean;
+      buttonText: string;
+      expectedAction: string;
+    }[] = [
+      {
+        should: "dispatch reset action on reset button click and not started",
+        started: false,
+        buttonText: "restart_alt",
+        expectedAction: "reset",
+      },
+      {
+        should: "dispatch stop action on end button click and started",
+        started: true,
+        buttonText: "close",
+        expectedAction: "stop",
+      },
+    ];
+
+    tests.forEach((test) => {
+      const { should, started, buttonText, expectedAction } = test;
+      it(`Should ${should}`, () => {
+        const state: BrewState = { started, ready: true, paused: false };
+        const dispatchBrew = jest.fn();
+        const dispatchDetails = jest.fn();
+        const component = (
+          <BrewControls
+            {...state}
+            dispatchBrew={dispatchBrew}
+            dispatchDetails={dispatchDetails}
+          />
+        );
+
+        const { getByText } = render(component);
+        const button = getByText(buttonText) as HTMLButtonElement;
+        fireEvent.click(button);
+        expectedAction === "reset"
+          ? expect(dispatchDetails).toHaveBeenCalledWith({
+              type: expectedAction,
+            })
+          : expect(dispatchBrew).toHaveBeenCalledWith({ type: expectedAction });
       });
     });
   });
