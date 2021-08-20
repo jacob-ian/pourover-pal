@@ -1,8 +1,3 @@
-import React, { useEffect, useState } from "react";
-import {
-  calculateAbsoluteStrength,
-  calculateRatioStrength,
-} from "../../../utils";
 import InputLabel from "../../common/InputLabel/InputLabel";
 import "./CoffeeStrength.sass";
 import CoffeeStrengthAbsolute from "./CoffeeStrengthAbsolute";
