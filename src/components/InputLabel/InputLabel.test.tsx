@@ -4,23 +4,18 @@ import { render } from "@testing-library/react";
 describe("InputLabel", () => {
   const label = "This is a test label";
 
-  const { container } = render(
-    <InputLabel label={label}>
-      <input type="text" />
-    </InputLabel>
-  );
+  describe("Test rendering", () => {
+    const component = <InputLabel label={label} for={"test-id"} />;
+    it("Should render a label in the document", () => {
+      const { getByText } = render(component);
+      const labelElement = getByText(label);
+      expect(labelElement).toBeInTheDocument();
+    });
 
-  const component = container.firstChild;
-
-  it("Should render the label", () => {
-    expect(component?.nodeName).toBe("LABEL");
-  });
-
-  it("Should have text inside the label", () => {
-    expect(component?.firstChild?.textContent).toBe(label);
-  });
-
-  it("Should have an input inside the label", () => {
-    expect(component?.lastChild?.nodeName).toBe("INPUT");
+    it("Should have the for tag on the label", () => {
+      const { getByText } = render(component);
+      const labelElement = getByText(label) as HTMLLabelElement;
+      expect(labelElement.htmlFor).toBe("test-id");
+    });
   });
 });
