@@ -1,4 +1,4 @@
-import IconButton from "../../common/IconButton/IconButton";
+import IconButton from "@components/IconButton";
 import "./ResetButton.sass";
 
 interface ResetButtonProps {

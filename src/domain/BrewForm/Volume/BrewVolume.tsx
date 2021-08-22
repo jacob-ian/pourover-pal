@@ -1,5 +1,5 @@
-import InputLabel from "../../common/InputLabel/InputLabel";
-import NumberInput from "../../common/NumberInput/NumberInput";
+import InputLabel from "@components/InputLabel";
+import NumberInput from "@components/NumberInput";
 
 interface BrewVolumeProps {
   label: string;

@@ -1,4 +1,4 @@
-import NumberInput from "../../common/NumberInput/NumberInput";
+import NumberInput from "@components/NumberInput";
 
 interface BloomRatioProps {
   onChange: React.FormEventHandler<HTMLInputElement>;

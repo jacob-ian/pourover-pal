@@ -1,4 +1,4 @@
-import InputLabel from "../../common/InputLabel/InputLabel";
+import InputLabel from "@components/InputLabel";
 import BloomDuration from "./BloomDuration";
 import BloomRatio from "./BloomRatio";
 

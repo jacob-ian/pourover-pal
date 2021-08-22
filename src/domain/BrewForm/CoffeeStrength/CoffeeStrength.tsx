@@ -1,4 +1,4 @@
-import InputLabel from "../../common/InputLabel/InputLabel";
+import InputLabel from "@components/InputLabel";
 import "./CoffeeStrength.sass";
 import CoffeeStrengthAbsolute from "./CoffeeStrengthAbsolute";
 import CoffeeStrengthRatio from "./CoffeeStrengthRatio";

@@ -1,5 +1,5 @@
 import { render, cleanup } from "@testing-library/react";
-import IconButton from "./IconButton";
+import IconButton from ".";
 
 afterEach(() => {
   cleanup();

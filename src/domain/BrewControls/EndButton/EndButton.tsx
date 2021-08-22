@@ -1,5 +1,5 @@
 import "./EndButton.sass";
-import IconButton from "../../common/IconButton/IconButton";
+import IconButton from "@components/IconButton";
 
 interface EndButtonProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>;

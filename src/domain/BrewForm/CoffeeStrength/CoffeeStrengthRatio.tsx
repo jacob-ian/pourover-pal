@@ -3,7 +3,7 @@ import {
   calculateAbsoluteStrength,
   calculateRatioStrength,
 } from "../../../utils";
-import NumberInput from "../../common/NumberInput/NumberInput";
+import NumberInput from "@components/NumberInput";
 
 interface CoffeeStrengthRatioProps {
   onChange: (value: string) => void;

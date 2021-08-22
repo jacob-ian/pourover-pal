@@ -1,4 +1,4 @@
-import './HeaderLogo.sass'
+import "./HeaderLogo.sass";
 
 interface HeaderLogoProps {
   src: string;
@@ -6,5 +6,5 @@ interface HeaderLogoProps {
 
 export default function HeaderLogo(props: HeaderLogoProps) {
   const { src } = props;
-  return <img className="header-logo" src={src} alt="Pourover Pal" />
+  return <img className="header-logo" src={src} alt="Pourover Pal" />;
 }

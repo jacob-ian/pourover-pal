@@ -1,4 +1,4 @@
-import InputLabel from "./InputLabel";
+import InputLabel from ".";
 import { render } from "@testing-library/react";
 
 describe("InputLabel", () => {

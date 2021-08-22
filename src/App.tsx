@@ -1,10 +1,10 @@
 import "./App.sass";
 import { useReducer } from "react";
-import BrewControls from "./components/BrewControls/BrewControls";
-import BrewForm from "./components/BrewForm/BrewForm";
-import BrewSteps from "./components/BrewSteps/BrewSteps";
+import BrewControls from "./domain/BrewControls/BrewControls";
+import BrewForm from "./domain/BrewForm/BrewForm";
+import BrewSteps from "./domain/BrewSteps/BrewSteps";
 import Card from "./components/Card";
-import Header from "./components/Header/Header";
+import Header from "./domain/Header/Header";
 import { useBrewReady } from "./hooks/useBrewReady";
 
 export interface BrewState {
