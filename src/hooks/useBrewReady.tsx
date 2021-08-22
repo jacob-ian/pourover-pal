@@ -14,5 +14,5 @@ export function useBrewReady(
       );
     }
     dispatch({ type: "ready", payload: { value: canStartBrew() } });
-  }, [brewDetails]);
+  }, [brewDetails, dispatch]);
 }
